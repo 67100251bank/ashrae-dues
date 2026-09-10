@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ชมรม ASHRAE</title>
+<link rel="icon" href="assets/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -72,17 +73,18 @@
   }
 
   .badge {
-    width: 84px;
-    height: 84px;
+    width: 96px;
+    height: 96px;
     border-radius: 22px;
-    background: linear-gradient(160deg, var(--accent-strong), var(--accent));
+    background: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 28px -12px rgba(14, 122, 129, 0.55);
+    box-shadow: 0 10px 28px -12px rgba(14, 122, 129, 0.4);
+    padding: 12px;
   }
 
-  .badge svg { width: 42px; height: 42px; }
+  .badge img { width: 100%; height: 100%; object-fit: contain; }
 
   .eyebrow {
     font-family: "IBM Plex Mono", monospace;
@@ -145,9 +147,7 @@
 <body>
 <main>
   <div class="badge">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2C12 2 6 9 6 14a6 6 0 0 0 12 0c0-5-6-12-6-12Z" fill="#F4FBFB" opacity="0.92"/>
-    </svg>
+    <img src="assets/logo.jpg" alt="โลโก้ชมรม ASHRAE University of Phayao">
   </div>
   <span class="eyebrow">ชมรม ASHRAE · มหาวิทยาลัยพะเยา</span>
   <h1>สรุปการเงินชมรม</h1>
