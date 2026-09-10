@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ชมรม ASHRAE</title>
+<title>เกี่ยวกับชมรม ASHRAE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F2F7F7;
@@ -17,6 +17,7 @@
     --accent: #0E7A81;
     --accent-strong: #0A5C62;
     --accent-ink: #F4FBFB;
+    --shadow: 0 1px 2px rgba(16, 40, 44, 0.06), 0 8px 24px -12px rgba(16, 40, 44, 0.18);
     color-scheme: light dark;
   }
 
@@ -30,6 +31,7 @@
       --accent: #3FD1C6;
       --accent-strong: #6EE0D6;
       --accent-ink: #04211F;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px -12px rgba(0, 0, 0, 0.55);
     }
   }
 
@@ -42,47 +44,40 @@
     --accent: #3FD1C6;
     --accent-strong: #6EE0D6;
     --accent-ink: #04211F;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px -12px rgba(0, 0, 0, 0.55);
   }
 
   * { box-sizing: border-box; }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-
   body {
+    margin: 0;
     background: var(--bg);
     color: var(--ink);
     font-family: "Sarabun", "IBM Plex Sans Thai", system-ui, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+    line-height: 1.65;
   }
 
-  main {
-    width: 100%;
-    max-width: 380px;
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 20px 56px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
     gap: 22px;
   }
 
   .badge {
-    width: 84px;
-    height: 84px;
-    border-radius: 22px;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
     background: linear-gradient(160deg, var(--accent-strong), var(--accent));
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 28px -12px rgba(14, 122, 129, 0.55);
+    box-shadow: var(--shadow);
   }
 
-  .badge svg { width: 42px; height: 42px; }
+  .badge svg { width: 32px; height: 32px; }
 
   .eyebrow {
     font-family: "IBM Plex Mono", monospace;
@@ -96,20 +91,54 @@
   h1 {
     font-family: "Kanit", sans-serif;
     font-weight: 700;
-    font-size: 28px;
-    margin: 0;
+    font-size: 30px;
+    margin: 2px 0 0;
     text-wrap: balance;
   }
 
   p.lead {
     margin: 0;
     color: var(--ink-muted);
-    font-size: 15px;
-    line-height: 1.6;
-    max-width: 30ch;
+    font-size: 16px;
+    max-width: 58ch;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card h2 {
+    font-family: "Kanit", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 14.5px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
   }
 
   a.enter {
+    align-self: flex-start;
     font-family: "Kanit", sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -119,6 +148,7 @@
     padding: 14px 32px;
     border-radius: 12px;
     box-shadow: 0 8px 20px -10px rgba(14, 122, 129, 0.6);
+    margin-top: 6px;
   }
 
   a.enter:focus-visible {
@@ -133,17 +163,37 @@
 </style>
 </head>
 <body>
-<main>
+<div class="wrap">
   <div class="badge">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2C12 2 6 9 6 14a6 6 0 0 0 12 0c0-5-6-12-6-12Z" fill="#F4FBFB" opacity="0.92"/>
     </svg>
   </div>
-  <span class="eyebrow">ชมรม ASHRAE · มหาวิทยาลัยพะเยา</span>
-  <h1>สรุปการเงินชมรม</h1>
-  <p class="lead">ตรวจสอบยอดเงินที่โอนเข้าและสถานะการชำระของสมาชิกแต่ละคน</p>
-  <a class="enter" href="dashboard.html">ดูสถานะเงิน</a>
-  <footer>อัปเดตข้อมูลเป็นระยะโดยฝ่ายการเงินชมรม</footer>
-</main>
+
+  <div>
+    <span class="eyebrow">Student Chapter · มหาวิทยาลัยพะเยา</span>
+    <h1>ชมรม ASHRAE</h1>
+  </div>
+
+  <p class="lead">
+    ASHRAE (American Society of Heating, Refrigerating and Air-Conditioning Engineers)
+    คือสมาคมวิศวกรรมระดับนานาชาติด้านงานปรับอากาศ ทำความเย็น และระบบระบายอากาศ
+    ชมรมนี้เป็นกลุ่มนิสิตสาขาวิศวกรรมเครื่องกล/พลังงาน ที่รวมตัวกันเพื่อพัฒนาความรู้ด้านนี้นอกห้องเรียน
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>ทำอะไรบ้าง</h2>
+      <p>จัดอบรมวิชาชีพงานปรับอากาศ เตรียมความพร้อมสอบใบประกอบวิชาชีพ และกิจกรรมแลกเปลี่ยนความรู้ด้าน HVAC</p>
+    </div>
+    <div class="card">
+      <h2>เงินชมรมมาจากไหน</h2>
+      <p>สมาชิกโอนเงินค่าลงทะเบียนกิจกรรม/ค่าอบรมผ่านฟอร์มออนไลน์ พร้อมแนบสลิปโอนเงินเป็นหลักฐาน</p>
+    </div>
+  </div>
+
+  <a class="enter" href="welcome.html">เข้าสู่ระบบชมรม</a>
+  <footer>ดูแลข้อมูลโดยฝ่ายการเงินชมรม ASHRAE</footer>
+</div>
 </body>
 </html>
