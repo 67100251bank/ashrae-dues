@@ -50,20 +50,29 @@
 
   * { box-sizing: border-box; }
 
-  body {
+  html, body {
+    height: 100%;
     margin: 0;
+  }
+
+  body {
     background: var(--bg);
     color: var(--ink);
     font-family: "Sarabun", "IBM Plex Sans Thai", system-ui, sans-serif;
     line-height: 1.65;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
   }
 
   .wrap {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 40px 20px 56px;
+    width: 100%;
+    max-width: 480px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 22px;
   }
 
@@ -99,7 +108,6 @@
   }
 
   a.enter {
-    align-self: flex-start;
     font-family: "Kanit", sans-serif;
     font-weight: 600;
     font-size: 16px;
