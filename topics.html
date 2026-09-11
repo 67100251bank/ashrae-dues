@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เลือกกิจกรรม · ชมรม ASHRAE</title>
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F7F7;
+    --surface: #FFFFFF;
+    --ink: #16262B;
+    --ink-muted: #587076;
+    --line: #D7E5E5;
+    --accent: #0E7A81;
+    --accent-strong: #0A5C62;
+    --accent-ink: #F4FBFB;
+    --shadow: 0 1px 2px rgba(16, 40, 44, 0.06), 0 8px 24px -12px rgba(16, 40, 44, 0.18);
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A1416;
+      --surface: #101C1F;
+      --ink: #E7F2F2;
+      --ink-muted: #8FA9AC;
+      --line: #22363A;
+      --accent: #3FD1C6;
+      --accent-strong: #6EE0D6;
+      --accent-ink: #04211F;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px -12px rgba(0, 0, 0, 0.55);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0A1416;
+    --surface: #101C1F;
+    --ink: #E7F2F2;
+    --ink-muted: #8FA9AC;
+    --line: #22363A;
+    --accent: #3FD1C6;
+    --accent-strong: #6EE0D6;
+    --accent-ink: #04211F;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px -12px rgba(0, 0, 0, 0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Sarabun", "IBM Plex Sans Thai", system-ui, sans-serif;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 28px 20px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 8px;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: "Kanit", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    margin: 2px 0 0;
+    text-wrap: balance;
+  }
+
+  p.lead {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  ul.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  li.row a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 16px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  li.row:last-child a { border-bottom: none; }
+
+  li.row a:hover, li.row a:focus-visible {
+    background: var(--bg);
+  }
+
+  .name {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .chev {
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  a.back {
+    font-size: 13px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    align-self: center;
+  }
+
+  a.back:hover, a.back:focus-visible { color: var(--accent); }
+
+  footer {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+    padding-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">ชมรม ASHRAE · มหาวิทยาลัยพะเยา</span>
+    <h1>เลือกกิจกรรม</h1>
+    <p class="lead">เลือกกิจกรรมที่ต้องการดูสถานะการเงิน</p>
+  </header>
+
+  <ul class="list" id="list"></ul>
+
+  <a class="back" href="welcome.html">← ย้อนกลับ</a>
+  <footer>ข้อมูลอัปเดตเป็นระยะโดยฝ่ายการเงินชมรม</footer>
+</div>
+
+<script>
+  var topics = [
+    { name: "ค่าสมัครทดสอบ CPD (สภาวิศวกร)", href: "dashboard.html" },
+    { name: "01 Data Center", href: "activity.html?name=" + encodeURIComponent("01 Data Center") },
+    { name: "02 Duct Estimate", href: "activity.html?name=" + encodeURIComponent("02 Duct Estimate") },
+    { name: "03 Spot Cooling", href: "activity.html?name=" + encodeURIComponent("03 Spot Cooling") },
+    { name: "04 Foam", href: "activity.html?name=" + encodeURIComponent("04 Foam") },
+    { name: "05", href: "activity.html?name=" + encodeURIComponent("05") },
+    { name: "06 BIM", href: "activity.html?name=" + encodeURIComponent("06 BIM") },
+    { name: "07", href: "activity.html?name=" + encodeURIComponent("07") },
+    { name: "08 ezyRTS", href: "activity.html?name=" + encodeURIComponent("08 ezyRTS") },
+    { name: "09 Energy", href: "activity.html?name=" + encodeURIComponent("09 Energy") },
+    { name: "10 Basi", href: "activity.html?name=" + encodeURIComponent("10 Basi") },
+    { name: "11 GenX", href: "activity.html?name=" + encodeURIComponent("11 GenX") }
+  ];
+
+  var listEl = document.getElementById('list');
+  topics.forEach(function (t) {
+    var li = document.createElement('li');
+    li.className = 'row';
+    var a = document.createElement('a');
+    a.href = t.href;
+    var name = document.createElement('span');
+    name.className = 'name';
+    name.textContent = t.name;
+    var chev = document.createElement('span');
+    chev.className = 'chev';
+    chev.textContent = '›';
+    a.appendChild(name);
+    a.appendChild(chev);
+    li.appendChild(a);
+    listEl.appendChild(li);
+  });
+</script>
+</body>
+</html>
