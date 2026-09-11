@@ -1,0 +1,438 @@
+<title>สถานะเงิน 10 Basi · ASHRAE</title>
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F7F7;
+    --surface: #FFFFFF;
+    --surface-2: #E7F0F0;
+    --ink: #16262B;
+    --ink-muted: #587076;
+    --line: #D7E5E5;
+    --accent: #0E7A81;
+    --accent-strong: #0A5C62;
+    --accent-ink: #F4FBFB;
+    --good: #2E8B57;
+    --good-bg: #E1F3E9;
+    --warn: #B4650A;
+    --warn-bg: #FBEADA;
+    --shadow: 0 1px 2px rgba(16, 40, 44, 0.06), 0 8px 24px -12px rgba(16, 40, 44, 0.18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A1416;
+      --surface: #101C1F;
+      --surface-2: #152327;
+      --ink: #E7F2F2;
+      --ink-muted: #8FA9AC;
+      --line: #22363A;
+      --accent: #3FD1C6;
+      --accent-strong: #6EE0D6;
+      --accent-ink: #04211F;
+      --good: #52D488;
+      --good-bg: rgba(82, 212, 136, 0.12);
+      --warn: #F5A524;
+      --warn-bg: rgba(245, 165, 36, 0.13);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px -12px rgba(0, 0, 0, 0.55);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0A1416;
+    --surface: #101C1F;
+    --surface-2: #152327;
+    --ink: #E7F2F2;
+    --ink-muted: #8FA9AC;
+    --line: #22363A;
+    --accent: #3FD1C6;
+    --accent-strong: #6EE0D6;
+    --accent-ink: #04211F;
+    --good: #52D488;
+    --good-bg: rgba(82, 212, 136, 0.12);
+    --warn: #F5A524;
+    --warn-bg: rgba(245, 165, 36, 0.13);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px -12px rgba(0, 0, 0, 0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Sarabun", "IBM Plex Sans Thai", system-ui, sans-serif;
+    line-height: 1.55;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 20px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 8px;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: "Kanit", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    margin: 2px 0 0;
+    text-wrap: balance;
+  }
+
+  .updated {
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .hero {
+    background: linear-gradient(160deg, var(--accent-strong), var(--accent));
+    color: var(--accent-ink);
+    border-radius: 20px;
+    padding: 26px 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .hero-label {
+    font-size: 13px;
+    opacity: 0.85;
+    font-weight: 500;
+  }
+
+  .hero-amount {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-amount small {
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 6px;
+    opacity: 0.85;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .hero-stat {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+
+  .hero-stat .n {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+    font-weight: 600;
+    display: block;
+  }
+
+  .hero-stat .l {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search {
+    flex: 1 1 200px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .search:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .tab {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-muted);
+    cursor: pointer;
+  }
+
+  .tab[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .tab:focus-visible, .search:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  ul.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  li.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  li.row:last-child { border-bottom: none; }
+
+  .who {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .who .name {
+    font-weight: 500;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .who .note {
+    font-size: 12px;
+    color: var(--warn);
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .amount {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 68px;
+    text-align: right;
+  }
+
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .pill.paid { background: var(--good-bg); color: var(--good); }
+  .pill.flag { background: var(--warn-bg); color: var(--warn); }
+
+  .empty {
+    padding: 32px 16px;
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  footer {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+    padding-top: 4px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    li.row { transition: background 0.15s ease; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">ชมรม ASHRAE · มหาวิทยาลัยพะเยา</span>
+    <h1>สถานะเงิน 10 Basi</h1>
+    <span class="updated" id="updated"></span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="hero-label">ยอดเงินที่จ่ายแล้ว</div>
+      <div class="hero-amount" id="heroAmount">0.00<small>บาท</small></div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="n" id="statTotal">0</span><span class="l">รายการทั้งหมด</span></div>
+      <div class="hero-stat"><span class="n" id="statPaid">0</span><span class="l">จ่ายแล้ว</span></div>
+      <div class="hero-stat"><span class="n" id="statFlag">0</span><span class="l">ต้องตรวจสอบ</span></div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <input class="search" id="search" type="text" placeholder="ค้นหาชื่อ..." autocomplete="off">
+    <div class="tabs" role="group" aria-label="กรองรายการ">
+      <button class="tab" data-filter="all" aria-pressed="true">ทั้งหมด</button>
+      <button class="tab" data-filter="paid" aria-pressed="false">จ่ายแล้ว</button>
+      <button class="tab" data-filter="flag" aria-pressed="false">ต้องตรวจสอบ</button>
+    </div>
+  </div>
+
+  <ul class="list" id="list"></ul>
+
+  <footer>อ่านยอดจากสลิปที่แนบในแบบฟอร์ม หน้านี้เป็นสำเนาข้อมูล ณ เวลาที่เผยแพร่ ไม่อัปเดตอัตโนมัติ</footer>
+</div>
+
+<script type="application/json" id="data">
+[{"name": "Dusit Aungkurabrut", "amount": 200.0, "note": ""}, {"name": "Chalisa Pimson", "amount": 50.0, "note": ""}, {"name": "เอกสิทธิ์ นาโควงค์", "amount": 50.0, "note": ""}, {"name": "อุลิต สินทบทอง", "amount": 200.0, "note": ""}, {"name": "อุลิต สินทบทอง", "amount": 200.0, "note": ""}, {"name": "อำไพศักดิ์ ทีบุญมา", "amount": 200.0, "note": ""}, {"name": "อาดัม คัมภิรานนท์", "amount": 100.09, "note": ""}, {"name": "อริสรา อิสระ", "amount": 50.0, "note": ""}, {"name": "อรรถวัฒน์ เยาวพัฒน์", "amount": 100.0, "note": ""}, {"name": "อมรเดช พรหมหากุล", "amount": 200.0, "note": ""}, {"name": "อภิรัฐ ฤาเดช", "amount": 100.0, "note": ""}, {"name": "อภินันต์ นามเขต", "amount": 50.0, "note": ""}, {"name": "อภิญญา รื่นสุขฤดี", "amount": 100.0, "note": ""}, {"name": "อภิชัช เติมศักดิ์", "amount": 100.0, "note": ""}, {"name": "อนุลักษณ์ บุญชุบ", "amount": 50.0, "note": ""}, {"name": "อธินันท์ ฤาชา", "amount": 50.0, "note": ""}, {"name": "อดิศร ออฤดี", "amount": 100.0, "note": ""}, {"name": "สุรศักดิ์ อเนกบุญสม", "amount": 50.0, "note": ""}, {"name": "สุเมธา เปาะทองคำ", "amount": 500.0, "note": ""}, {"name": "สุธารัก กล่อมเจริญ", "amount": 100.0, "note": ""}, {"name": "สุธน ธโนศวรรย์", "amount": 58.0, "note": ""}, {"name": "สืบ ประจันตะเสน", "amount": 51.35, "note": ""}, {"name": "สิทธิชัย เอกอภิรัตน์", "amount": 50.0, "note": ""}, {"name": "สันทนา นิตรมร", "amount": 300.0, "note": ""}, {"name": "สันทนา นิตรมร", "amount": 300.0, "note": ""}, {"name": "สันติภาพ เทพาคำ", "amount": 50.0, "note": ""}, {"name": "สัญชัย บุราสิทธิ์", "amount": 100.0, "note": ""}, {"name": "สมศักดิ์ ฟักอ่อน", "amount": 50.0, "note": ""}, {"name": "สมพร เมืองผุย", "amount": 100.0, "note": ""}, {"name": "ศราวุธ น้อยสุวรรณ", "amount": 50.0, "note": ""}, {"name": "วีระชัย สุวรรณภักดี", "amount": 50.0, "note": ""}, {"name": "วีระ ศรีอริยะกุล", "amount": 50.0, "note": ""}, {"name": "วินัย จันทพจน์", "amount": 50.0, "note": ""}, {"name": "วิชญสิทธิ์ ตันยงค์เวช", "amount": 100.0, "note": ""}, {"name": "วิชญสิทธิ์ ตันยงค์เวช", "amount": 100.0, "note": ""}, {"name": "วัชรวิทย์ ลอยมี", "amount": 50.0, "note": ""}, {"name": "วัชรพงศ์ ณ พัทลุง", "amount": 100.0, "note": ""}, {"name": "วัชรกร เดชคุณมาก", "amount": 50.0, "note": ""}, {"name": "วริทย์ ไชยเดช", "amount": 50.0, "note": ""}, {"name": "วรพงษ์ คำดี", "amount": 50.0, "note": ""}, {"name": "วชิรวิทย์ แก้วประภา", "amount": 50.0, "note": ""}, {"name": "รุ่งโรจน์ โรจน์รัตนาดำรง", "amount": 50.0, "note": ""}, {"name": "รัฐพงษ์ นวลศรีไพร", "amount": 50.0, "note": ""}, {"name": "ยรรยง สุวรรณโพธิ์", "amount": 50.0, "note": ""}, {"name": "มานะ วัฒนากร", "amount": 200.0, "note": ""}, {"name": "มนปรวีร์ จอมศิริวัฒน์", "amount": null, "note": "ลิงก์แนบเป็นรูปโปสเตอร์โฆษณา ไม่ใช่สลิปโอนเงิน"}, {"name": "มนปรวีร์ จอมศิริวัฒน์", "amount": null, "note": "ลิงก์แนบเป็นรูปโปสเตอร์โฆษณา ไม่ใช่สลิปโอนเงิน"}, {"name": "มนปรวีร์ จอมศิริวัฒน์", "amount": null, "note": "ลิงก์แนบเป็นรูปโปสเตอร์โฆษณา ไม่ใช่สลิปโอนเงิน"}, {"name": "ภูริณัฐ ตุ้ยแสง", "amount": 50.0, "note": ""}, {"name": "ภานุกร กุลสิงห์", "amount": 50.0, "note": ""}, {"name": "ภาณุ ประทุมนพรัตน์", "amount": 100.0, "note": ""}, {"name": "ภาคภูมิ ทองแผ่น", "amount": 100.0, "note": ""}, {"name": "ภาคภูมิ มั่นสิทธิกุล", "amount": 200.0, "note": ""}, {"name": "ไพโรจน์ จันทร์แก้ว", "amount": 50.0, "note": ""}, {"name": "พิษณุ สุพร", "amount": 50.0, "note": ""}, {"name": "พลากร จุกสีดา", "amount": 50.0, "note": ""}, {"name": "พลศร คำผุย", "amount": 200.0, "note": ""}, {"name": "พรประเสริฐ เชื้อบุญ", "amount": 50.0, "note": ""}, {"name": "พรเทพ ส่องแสงศิริศักดิ์", "amount": 50.0, "note": ""}, {"name": "ปิยชัย ใหญ่เสมอ", "amount": 50.0, "note": ""}, {"name": "ปาจรีย์ โรจน์ฉิมพลี", "amount": 50.0, "note": ""}, {"name": "ปัณณธร ธีราโชติสิน", "amount": 50.0, "note": ""}, {"name": "ปรีชา โขธนพงศ์", "amount": 100.0, "note": ""}, {"name": "ประสพโชค มณีรัตน์", "amount": 100.0, "note": ""}, {"name": "ประพันธ์ จันทร์แจ้ง", "amount": 50.0, "note": ""}, {"name": "ปฐมพงศ์ เกษตรสิงห์", "amount": 89.0, "note": ""}, {"name": "ปฐมทศ คอนรัมย์", "amount": 100.0, "note": ""}, {"name": "ปฏิภาณ ภาเรือง", "amount": 131.0, "note": ""}, {"name": "บุญประเสริฐ ฟักโต", "amount": 100.0, "note": ""}, {"name": "บัณฑิตย์ สุขประเสริฐ", "amount": 100.0, "note": ""}, {"name": "บัณฑิตย์ สุขประเสริฐ", "amount": 50.0, "note": ""}, {"name": "บัญชา สายฟ้า", "amount": 50.0, "note": ""}, {"name": "บรรพต กัณทา", "amount": 50.0, "note": ""}, {"name": "นิเวช ยะสูงเนิน", "amount": 100.0, "note": ""}, {"name": "น่านฟ้า นัยนแพทย์", "amount": 100.0, "note": ""}, {"name": "นัฐพล บุญเพ็ญ", "amount": 100.0, "note": ""}, {"name": "นฤเบศร์ หนูใสเพ็ชร", "amount": 100.0, "note": ""}, {"name": "นราวิชญ์ แก้วอุดม", "amount": 50.0, "note": ""}, {"name": "นภาพร พัดชะนะ", "amount": 100.0, "note": ""}, {"name": "นนทกร ศรีแตง", "amount": 100.0, "note": ""}, {"name": "นที เพ็ชรช้าง", "amount": 100.0, "note": ""}, {"name": "ธันวา ข่ายม่าน", "amount": 50.0, "note": ""}, {"name": "ธนาธิป รัตนานนท์เสถียร", "amount": 50.0, "note": ""}, {"name": "ธนาชัย เต็งจิรธนาภา", "amount": 50.0, "note": ""}, {"name": "ธนศักดิ์ เจริญพร", "amount": 100.0, "note": ""}, {"name": "ธนภรณ์ ปิติยงยุทธ", "amount": 50.0, "note": ""}, {"name": "ธนดล ผลเอนก", "amount": 50.0, "note": ""}, {"name": "ทรงสุภา พุ่มชุมพล", "amount": 100.0, "note": ""}, {"name": "ตวงพล นพกุลสถิตย์", "amount": 50.0, "note": ""}, {"name": "ณัฐวัฒน์ สอนศรี", "amount": 250.0, "note": ""}, {"name": "ณัฐวัจน์ แท้สูงเนิน", "amount": 50.0, "note": ""}, {"name": "ณัฐพัชร ภาระพงษ์", "amount": 50.0, "note": ""}, {"name": "ณัฐพล แก้วพวง", "amount": 100.0, "note": ""}, {"name": "ณัฐพนธ์ พิชญากร", "amount": 50.0, "note": ""}, {"name": "ณัฐพนธ์ พิชญากร", "amount": 50.0, "note": ""}, {"name": "ณัฐพงศ์ จักรวาลกิจ", "amount": 100.0, "note": ""}, {"name": "ณัฐนันท์ จีนศรีคง", "amount": 50.0, "note": ""}, {"name": "ณรงค์ วิธิสินธุ์", "amount": 100.0, "note": ""}, {"name": "ฐิตินันท์ สุปการ", "amount": 100.0, "note": ""}, {"name": "ไชยา สอนวงษ์", "amount": 200.0, "note": ""}, {"name": "ชูฤทธิ์ อมรพฤกษ์ชัย", "amount": 100.0, "note": ""}, {"name": "ชูชาติ บุญประกอบโชค", "amount": 50.0, "note": ""}, {"name": "ชัยสิทธิ์ คุ้มสกุล", "amount": 100.0, "note": ""}, {"name": "ชัยยุทธ ปิ่นแช่ม", "amount": 50.0, "note": ""}, {"name": "ชยวีย์ ปรากฎ", "amount": 100.0, "note": ""}, {"name": "ชยวิชญ์ เทพวงษ์", "amount": 100.0, "note": ""}, {"name": "ฉัตรชัย ฉัตรเรืองแสง", "amount": 100.0, "note": ""}, {"name": "จีราวัฒน์ เจียมจารุภัทร์", "amount": 100.0, "note": ""}, {"name": "จีรพัฒน์ วงศ์ตระกูล", "amount": 50.0, "note": ""}, {"name": "จิรกิตติ์ สมสกุล", "amount": 50.0, "note": ""}, {"name": "จิรกิตติ์ สมสกุล", "amount": 50.0, "note": ""}, {"name": "จิรกิตติ์ สมสกุล", "amount": 50.0, "note": ""}, {"name": "จารุกิตติ์ บรรลือเผ่าพงศ์", "amount": 50.0, "note": ""}, {"name": "จารักษ์ หนูราช", "amount": 200.0, "note": ""}, {"name": "จาตุรนต์ วงค์ไชยษา", "amount": 50.0, "note": ""}, {"name": "จตุวุฒิ สุขมา", "amount": 200.0, "note": ""}, {"name": "จตุพล ศิริรังษี", "amount": 100.0, "note": ""}, {"name": "โฆษิต วงค์กะโซ่", "amount": 50.0, "note": ""}, {"name": "เขตพงศ์ อินทรชัยศรี", "amount": 100.0, "note": ""}, {"name": "เกรียงศักดิ์ วิสารจารุศร", "amount": 50.0, "note": ""}, {"name": "กุลวัฒน์ ยิ่งรักเจริญ", "amount": 50.0, "note": ""}, {"name": "กิตติศักดิ์ ศิริสงค์", "amount": 50.0, "note": ""}]
+</script>
+
+<script>
+(function () {
+  var records = JSON.parse(document.getElementById('data').textContent);
+  var fmt = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  var total = records.length;
+  var paid = records.filter(function (r) { return typeof r.amount === 'number'; });
+  var flagged = records.filter(function (r) { return typeof r.amount !== 'number'; });
+  var sum = paid.reduce(function (a, r) { return a + r.amount; }, 0);
+
+  document.getElementById('heroAmount').innerHTML = fmt.format(sum) + '<small>บาท</small>';
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPaid').textContent = paid.length;
+  document.getElementById('statFlag').textContent = flagged.length;
+
+  var now = new Date();
+  document.getElementById('updated').textContent = 'อัปเดตล่าสุด ' + now.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  var listEl = document.getElementById('list');
+  var searchEl = document.getElementById('search');
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var currentFilter = 'all';
+
+  function render() {
+    var q = searchEl.value.trim().toLowerCase();
+    var rows = records.filter(function (r) {
+      var matchesFilter =
+        currentFilter === 'all' ||
+        (currentFilter === 'paid' && typeof r.amount === 'number') ||
+        (currentFilter === 'flag' && typeof r.amount !== 'number');
+      var matchesSearch = !q || r.name.toLowerCase().indexOf(q) !== -1;
+      return matchesFilter && matchesSearch;
+    });
+
+    listEl.innerHTML = '';
+
+    if (rows.length === 0) {
+      var empty = document.createElement('li');
+      empty.className = 'empty';
+      empty.textContent = 'ไม่พบรายชื่อที่ค้นหา';
+      listEl.appendChild(empty);
+      return;
+    }
+
+    rows.forEach(function (r) {
+      var li = document.createElement('li');
+      li.className = 'row';
+
+      var who = document.createElement('div');
+      who.className = 'who';
+      var name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = r.name;
+      who.appendChild(name);
+      if (r.note) {
+        var note = document.createElement('span');
+        note.className = 'note';
+        note.textContent = r.note;
+        who.appendChild(note);
+      }
+
+      var right = document.createElement('div');
+      right.className = 'right';
+
+      if (typeof r.amount === 'number') {
+        var amt = document.createElement('span');
+        amt.className = 'amount';
+        amt.textContent = fmt.format(r.amount);
+        var pill = document.createElement('span');
+        pill.className = 'pill paid';
+        pill.textContent = 'จ่ายแล้ว';
+        right.appendChild(amt);
+        right.appendChild(pill);
+      } else {
+        var pillFlag = document.createElement('span');
+        pillFlag.className = 'pill flag';
+        pillFlag.textContent = 'ตรวจสอบ';
+        right.appendChild(pillFlag);
+      }
+
+      li.appendChild(who);
+      li.appendChild(right);
+      listEl.appendChild(li);
+    });
+  }
+
+  searchEl.addEventListener('input', render);
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
+      tab.setAttribute('aria-pressed', 'true');
+      currentFilter = tab.getAttribute('data-filter');
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
